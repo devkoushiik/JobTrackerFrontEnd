@@ -3,7 +3,10 @@
   "builds": [
     {
       "src": "index.html",
-      "use": "@vercel/static-build"
+      "use": "@vercel/static-build",
+      "config": {
+        "vite": "^5.4.10"
+      }
     }
   ],
   "routes": [
