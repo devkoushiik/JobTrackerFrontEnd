@@ -3,7 +3,6 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 import express from "express";
-const app = express();
 import morgan from "morgan";
 import jobRouter from "./routes/job.routes.js";
 import mongoose from "mongoose";
@@ -16,12 +15,21 @@ import cloudinary from "cloudinary";
 import helmet from "helmet";
 import mongoSanitize from "express-mongo-sanitize";
 import cors from "cors";
+const app = express();
 // public
 import { dirname } from "path";
 import { fileURLToPath } from "url";
-import path from "path";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
+const corsOptions = {
+  origin: "https://job-tracker-67hh.vercel.app", // Your frontend URL
+  methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
+  allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
+};
+app.options("*", cors(corsOptions));
+app.use(cors(corsOptions));
+
+// cloudnary
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_API_KEY,
@@ -32,19 +40,6 @@ if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
 }
 
-
-app.use(
-  cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    exposedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-    maxAge: 3600,
-  })
-);
-
-app.use(express.static(path.resolve(__dirname, "./frontend/dist")));
 app.use(cookieParser());
 app.use(express.json());
 
@@ -55,9 +50,6 @@ app.use("/api/v1/jobs", authenticateUser, jobRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", authenticateUser, userRouter);
 
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "./frontend/dist", "index.html"));
-});
 
 app.use("*", (req, res) => {
   res.status(404).json({ msg: "not found" });
