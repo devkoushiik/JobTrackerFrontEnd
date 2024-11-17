@@ -15,6 +15,7 @@ import userRouter from "./routes/user.routes.js";
 import cloudinary from "cloudinary";
 import helmet from "helmet";
 import mongoSanitize from "express-mongo-sanitize";
+import cors from "cors";
 // public
 import { dirname } from "path";
 import { fileURLToPath } from "url";
