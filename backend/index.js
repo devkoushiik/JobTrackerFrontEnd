@@ -32,7 +32,10 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 // middlewares
-const allowedOrigins = ["https://job-tracker-up8x.vercel.app"];
+const allowedOrigins = [
+  "https://job-tracker-up8x.vercel.app",
+  "http://localhost:5173",
+];
 
 app.use(
   cors({
