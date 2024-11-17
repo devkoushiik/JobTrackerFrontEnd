@@ -7,7 +7,8 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "http://localhost:5100/api",
+        target:
+          "https://job-tracker-au74c2qu3-koushik-ahmeds-projects.vercel.app/api",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },

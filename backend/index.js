@@ -32,6 +32,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 // middlewares
+app.use(cors());
 app.use(express.static(path.resolve(__dirname, "./frontend/dist")));
 app.use(cookieParser());
 app.use(express.json());
