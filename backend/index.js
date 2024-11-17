@@ -22,7 +22,7 @@ import { fileURLToPath } from "url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const corsOptions = {
-  origin: "https://job-tracker-67hh.vercel.app", // Your frontend URL
+  origin: process.env.ORIGIN, // Your frontend URL
   methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
   allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
 };
