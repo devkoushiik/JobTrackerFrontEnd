@@ -32,7 +32,19 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 // middlewares
-app.use(cors());
+const allowedOrigins = ["https://job-tracker-up8x.vercel.app"];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    exposedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+    maxAge: 3600,
+  })
+);
+
 app.use(express.static(path.resolve(__dirname, "./frontend/dist")));
 app.use(cookieParser());
 app.use(express.json());
